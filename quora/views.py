@@ -51,24 +51,25 @@ def question(request, question_id):
 
 
 @login_required
-def new_question(request, tag_id):
+def new_question(request, tag_id=1):
     """Adding a new Question to a particular tag."""
-    tag = Tag.objects.get(id=tag_id)
+    #tag = Tag.objects.get(id=tag_id)
 
     if request.method != 'POST':
         # No data submitted; create a blank form.
         form = QuestionForm()
+        form.fields['tag'].initial = tag_id 
     else:
         # POST data submitted; process data.
         form = QuestionForm(data=request.POST)
         if form.is_valid():
             new_question = form.save(commit=False)
-            new_question.tag = tag
+            #new_question.tag = tag
             new_question.owner = request.user
             new_question.save()
-            return HttpResponseRedirect(reverse('quora:tag',args=[tag_id]))
+            return HttpResponseRedirect(reverse('quora:index'))
     
-    context = {'tag':tag,'form':form}
+    context = {'form':form}
     return render(request, 'quora/new_question.html', context)
 
 @login_required

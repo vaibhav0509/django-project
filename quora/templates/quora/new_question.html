@@ -1,9 +1,8 @@
 {% extends "quora/base.html" %}
 {% block content %}
-<p><a href="{% url 'quora:tag' tag.id %}">{{ tag }}</a></p>
 
  <p>Add a new question:</p>
-<form action="{% url 'quora:new_question' tag.id %}" method='post'>
+<form action="{% url 'quora:new_question' %}" method='post'>
  {% csrf_token %}
  {{ form.as_p }}
  <button name='submit'>add question</button>

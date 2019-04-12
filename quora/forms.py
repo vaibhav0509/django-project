@@ -2,6 +2,7 @@ from django import forms
 
 from . models import Tag, Question ,Answer
 
+
 class TagForm(forms.ModelForm):
     class Meta:
         model = Tag
@@ -11,9 +12,10 @@ class TagForm(forms.ModelForm):
 class QuestionForm(forms.ModelForm):
     class Meta:
         model = Question
-        fields = ['text']
-        labels = {'text':'Enter Question'}
-        widgets = {'text': forms.Textarea(attrs={'cols':80})}
+        fields = ['text','tag']
+        initial = {'tag':1}
+        labels = {'text':'Enter Question','tag':'Choose Tag'}
+        widgets = {'text': forms.Textarea(attrs={'cols':80}),}
 
 class AnswerForm(forms.ModelForm):
     class Meta:

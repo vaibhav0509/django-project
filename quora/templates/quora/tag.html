@@ -2,10 +2,10 @@
 
 {% block content %}
 
-  <p>Tag: {{ tag }}</p>
+  <p>Tag:</p>
   <p>Questions:</p>
   <p>
-        <a href="{% url 'quora:new_question' tag.id %}">add new question</a>
+        <a href="{% url 'quora:new_question_tag' tag.id %}">add new question</a>
   </p>
   <ul>
   {% for question in questions %}

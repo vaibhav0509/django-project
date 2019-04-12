@@ -19,7 +19,8 @@ urlpatterns = [
     path('new_tag', views.new_tag, name='new_tag'),
 
     # Page for adding a new question.
-    path('new_question/<int:tag_id>/',views.new_question, name='new_question'),
+    path('new_question',views.new_question, name='new_question'),
+    path('new_question/<int:tag_id>/',views.new_question, name='new_question_tag'),
 
     # Page for showing question and answer.
     path('question/<int:question_id>/', views.question, name='question'),
