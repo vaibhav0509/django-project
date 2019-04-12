@@ -1,0 +1,29 @@
+{% extends "quora/base.html" %}
+
+{% block content %}
+<p>Quora - The Questions and Answers Website... </p>
+
+<p>Quora lets you asks questions and get the answers from 
+    our large community.<br>
+    You can also give answers to others questions and help others and also increase our 
+    ever incresasing database of knowledge.
+</p>
+
+<p>
+    {% for question in questions %}
+    <li>
+    	<p>Asked on {{ question.date_added|date:'M d, Y' }}  by  {{question.owner.username.title}}</p>
+         <p>>>> {{ question.text }}</p>
+         <p>
+						<a href="{% url 'quora:question' question.id %}">See Answers</a>	
+						<a href="{% url 'quora:answer_question' question.id %}">answer question</a>
+         </p>
+     </li>
+      {% empty %}
+      <li>
+         There are no questions yet.
+      </li>
+     {% endfor %}
+</p>
+
+{% endblock content %}

@@ -1,0 +1,19 @@
+{% extends "quora/base.html" %}
+
+{% block content %}
+
+<p>Tags</p>
+
+<ul>
+    {% for tag in tags %}
+			<li>
+				<a href="{% url 'quora:tag' tag.id %}">{{ tag }}</a>
+			</li>
+		{% empty %}
+			<li>No tags have been added yet.</li>
+		{% endfor %}
+</ul>
+
+<a href="{% url 'quora:new_tag' %}">Add a new tag:</a>
+
+{% endblock content %}

@@ -1,0 +1,23 @@
+{% extends 'quora/base.html' %}
+
+{% block content %}
+
+  <p>Question:</p>
+  <!--<p><a href="{% url 'quora:answer_question' question.id %}">answer question</a></p>-->
+  <ul>
+  {% for answer in answers %}
+   <li>
+    <!----<p>{{ question.date_added|date:'M d, Y H:i' }}</p>-->
+    <p>Answer-{{forloop.counter}}</p>
+    <p>{{ answer.text|linebreaks }}</p>
+    <!--<p>
+        <a href="{% url 'quora:edit_question' question.id %}">edit question</a>
+    </p>-->
+   </li>
+   {% empty %}
+   <li>
+    There are no answers for this question yet.
+   </li>
+  {% endfor %}
+  </ul>
+{% endblock content %}

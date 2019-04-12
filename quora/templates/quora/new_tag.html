@@ -1,0 +1,10 @@
+{% extends "quora/base.html" %}
+{% block content %}
+ <p>Add a new tag:</p>
+
+ <form action="{% url 'quora:new_tag' %}" method='post'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button name="submit">add tagc</button>
+</form>
+{% endblock content %}

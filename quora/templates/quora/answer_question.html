@@ -1,0 +1,14 @@
+{% extends 'quora/base.html' %}
+
+{% block content %}
+
+	<!--<p><a href="{% url 'quora:tag' tag.id %}">{{tag}}</a></p>-->
+    <p>{{question.text}}</p>
+    <p>Answer Question :</p>
+    
+	<form action="{% url 'quora:answer_question' question.id %}" method="POST">
+		{% csrf_token %}
+		{{form.as_p}}
+		<button name="submit">Submit Answer</button>
+	</form>
+{% endblock content %}

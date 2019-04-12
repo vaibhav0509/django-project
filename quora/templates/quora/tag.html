@@ -1,0 +1,29 @@
+{% extends 'quora/base.html' %}
+
+{% block content %}
+
+  <p>Tag: {{ tag }}</p>
+  <p>Questions:</p>
+  <p>
+        <a href="{% url 'quora:new_question' tag.id %}">add new question</a>
+  </p>
+  <ul>
+  {% for question in questions %}
+   <li>
+    <!----<p>{{ question.date_added|date:'M d, Y H:i' }}</p>-->
+    <p>Question-{{forloop.counter}}</p>
+    <p>{{ question.text|linebreaks }}</p>
+    <p>
+        <a href="{% url 'quora:question' question.id %}">see answers</a>
+        {% ifequal question.owner request.user %}
+          <a href="{% url 'quora:edit_question' question.id %}">edit question</a>
+        {% endifequal %}
+    </p>
+   </li>
+   {% empty %}
+   <li>
+    There are no questions for this tag yet.
+   </li>
+  {% endfor %}
+  </ul>
+{% endblock content %}
