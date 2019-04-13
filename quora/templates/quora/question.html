@@ -1,23 +1,30 @@
 {% extends 'quora/base.html' %}
 
+{% block header %}
+  <h2><strong>{{question.text}}</strong></h2>
+{% endblock header %}
+
 {% block content %}
 
-  <p>Question:</p>
-  <!--<p><a href="{% url 'quora:answer_question' question.id %}">answer question</a></p>-->
-  <ul>
-  {% for answer in answers %}
-   <li>
-    <!----<p>{{ question.date_added|date:'M d, Y H:i' }}</p>-->
-    <p>Answer-{{forloop.counter}}</p>
-    <p>{{ answer.text|linebreaks }}</p>
-    <!--<p>
-        <a href="{% url 'quora:edit_question' question.id %}">edit question</a>
-    </p>-->
-   </li>
+<h4><p><a href="{% url 'quora:answer_question' question.id %}">Answer Question</a></p></h4>
+
+{% for answer in answers %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>
+            {{ answer.text }}
+            <small>
+                {{answer.rating}}
+            </small>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <p>Upvote-Downvote</p>
+        <p class="text-right"> On {{ answer.date_added|date:'M d, Y H:i' }} By {{answer.owner.username.title}}</p>
+      </div>
+    </div>
+        <a href="{% url 'quora:question' question.id %}">see answers</a>
    {% empty %}
-   <li>
-    There are no answers for this question yet.
-   </li>
+    <h4><br>There are no answers for this question yet.</h4>
   {% endfor %}
-  </ul>
 {% endblock content %}

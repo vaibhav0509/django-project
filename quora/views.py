@@ -8,8 +8,17 @@ from .forms import TagForm, QuestionForm, AnswerForm
 
 def index(request):
     """The home page for Quora"""
+    questions = Question.objects.order_by('-id')
+    answers = Answer.objects.order_by('-rating')
+    qa = {}
+    for q in questions:
+        qa[int(q.id)] = 'No Answer.'
+        for a in answers:
+            if a.question == q:
+                qa[int(q.id)] = a.text
+                break
     questions = Question.objects.order_by('-date_added')
-    context = {'questions':questions}
+    context = {'questions':questions,'qa':qa}
     return render(request, 'quora/index.html',context)
 
 def tags(request):
@@ -67,7 +76,7 @@ def new_question(request, tag_id=1):
             #new_question.tag = tag
             new_question.owner = request.user
             new_question.save()
-            return HttpResponseRedirect(reverse('quora:index'))
+            return HttpResponseRedirect(reverse('quora:tag',args=[new_question.tag.id]))
     
     context = {'form':form}
     return render(request, 'quora/new_question.html', context)

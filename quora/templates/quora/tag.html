@@ -1,29 +1,33 @@
 {% extends 'quora/base.html' %}
 
+{% block header %}
+ <h1>{{ tag }}</h1>
+{% endblock header %}
+
 {% block content %}
 
-  <p>Tag:</p>
-  <p>Questions:</p>
-  <p>
-        <a href="{% url 'quora:new_question_tag' tag.id %}">add new question</a>
-  </p>
-  <ul>
+ <h4><p><a href="{% url 'quora:new_question_tag' tag.id %}">Add a New Question</a></p></h4>
+  <p><h4>Questions:</h4></p>
+  
   {% for question in questions %}
-   <li>
-    <!----<p>{{ question.date_added|date:'M d, Y H:i' }}</p>-->
-    <p>Question-{{forloop.counter}}</p>
-    <p>{{ question.text|linebreaks }}</p>
-    <p>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>
+            {{ question.text }}
+            <small>
+                {% ifequal question.owner request.user %}
+                <a href="{% url 'quora:edit_question' question.id %}">Edit Question</a>
+              {% endifequal %}
+            </small>
+        </h3>
+      </div>
+      <div class="panel-body">
+          On {{ question.date_added|date:'M d, Y H:i' }} By {{question.owner.username.title}}
+      </div>
+    </div>
         <a href="{% url 'quora:question' question.id %}">see answers</a>
-        {% ifequal question.owner request.user %}
-          <a href="{% url 'quora:edit_question' question.id %}">edit question</a>
-        {% endifequal %}
-    </p>
-   </li>
    {% empty %}
-   <li>
     There are no questions for this tag yet.
-   </li>
   {% endfor %}
-  </ul>
+
 {% endblock content %}

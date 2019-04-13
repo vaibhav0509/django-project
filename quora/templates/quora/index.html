@@ -1,32 +1,51 @@
 {% extends "quora/base.html" %}
 
+{% load get_list_index %}
+
+{% block header %}
+	<div class="jumbotron text-center">
+			<p><h2>Quora - The Questions and Answers Website...</h2></p>
+	</div>
+	<h4><p class="text-center">Quora lets you asks questions and get the answers from 
+			our large community.<br>
+			You can also give answers to others questions and help others and also increase our 
+			ever incresasing database of knowledge.
+	</p></h>
+{% endblock header %}
+
 {% block content %}
-<p>Quora - The Questions and Answers Website... </p>
 
-<p>Quora lets you asks questions and get the answers from 
-    our large community.<br>
-    You can also give answers to others questions and help others and also increase our 
-    ever incresasing database of knowledge.
-</p>
-<p>
-	<a href="{% url 'quora:new_question' %}">Add New Question</a>
-</p>
 
-<p>
+	<a href="{% url 'quora:new_question' %}"><h3 class="text-center">Add New Question</h3></a>
     {% for question in questions %}
-    <li>
-    	<p>Asked on {{ question.date_added|date:'M d, Y' }}  by  {{question.owner.username.title}}</p>
-         <p>>>> {{ question.text }}</p>
-         <p>
-						<a href="{% url 'quora:question' question.id %}">See Answers</a>	
-						<a href="{% url 'quora:answer_question' question.id %}">answer question</a>
-         </p>
-     </li>
-      {% empty %}
-      <li>
-         There are no questions yet.
-      </li>
-     {% endfor %}
-</p>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>
+						{{ question.text }}
+						<small>
+							{{ question.tag}}
+						</small>
+                
+        </h3>
+      </div>
+      <div class="panel-body">
+					<h4>
+						{{qa|get_dict_value:question.id}}
+						
+					</h4>
+			</div>
+			<div class="panel-body">
+					<a href="{% url 'quora:question' question.id %}">See All Answers</a>-
+					<a href="{% url 'quora:answer_question' question.id %}">Give Answer</a>
+					{% ifequal question.owner request.user %}
+                -<a href="{% url 'quora:edit_question' question.id %}">Edit Question</a>
+          {% endifequal %}
+					<p style="text-align:right;">On {{ question.date_added|date:'M d, Y H:i' }} By {{question.owner.username.title}}</p> 
+      </div>
+    </div>
+   {% empty %}
+    There are no questions for this tag yet.
+  {% endfor %}
+
 
 {% endblock content %}

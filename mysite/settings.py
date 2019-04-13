@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'quora',
     'users',
 
+    # Third party apps
+    'bootstrap3',
+
 ]
 
 MIDDLEWARE = [
@@ -127,3 +130,10 @@ STATIC_URL = '/static/'
 # My settings
 
 LOGIN_URL = '/users/login/'
+
+# Settings for django-bootstrap3
+BOOTSTRAP3 = {
+ 'include_jquery': True,
+ 'include_javascript' : True,
+ 
+ }

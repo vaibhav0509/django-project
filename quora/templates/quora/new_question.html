@@ -1,11 +1,19 @@
 {% extends "quora/base.html" %}
+
+{% load bootstrap3 %}
+
+{% block header %}
+  <h3><strong>Add a new question.</strong></h3>
+{% endblock header %}
+
 {% block content %}
 
- <p>Add a new question:</p>
 <form action="{% url 'quora:new_question' %}" method='post'>
  {% csrf_token %}
- {{ form.as_p }}
- <button name='submit'>add question</button>
+ {% bootstrap_form form %}
+	{% buttons %}
+ 		<button name="submit" class="btn btn-primary">Add Question</button>
+ 	{% endbuttons %}
  </form>
 
 {% endblock content %}

@@ -1,18 +1,26 @@
 {% extends "quora/base.html" %}
 
+{% block header %}
+ <h2>Tags</h2>
+{% endblock header %}
+
 {% block content %}
 
-<p>Tags</p>
-
-<ul>
-    {% for tag in tags %}
-			<li>
-				<a href="{% url 'quora:tag' tag.id %}">{{ tag }}</a>
-			</li>
-		{% empty %}
-			<li>No tags have been added yet.</li>
-		{% endfor %}
-</ul>
+{% for tag in tags %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4>
+			<a href="{% url 'quora:tag' tag.id %}">{{ tag.text }}</a>
+        </h4>
+      </div>
+      <div class="panel-body">
+        <p>{{tag.description}}</p>
+      </div>
+    </div>
+        
+   {% empty %}
+    <h4><br>No tags have been added yet.</h4>
+  {% endfor %}
 
 <a href="{% url 'quora:new_tag' %}">Add a new tag:</a>
 

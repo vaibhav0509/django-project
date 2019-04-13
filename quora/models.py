@@ -7,6 +7,7 @@ class Tag(models.Model):
     """A Tag linked to a question."""
     text = models.CharField(max_length=30)
     date_added = models.DateTimeField(auto_now=True)
+    description = models.CharField(max_length=300,null=True,blank=True)
 
     class Meta:
         verbose_name = 'Tag'
@@ -36,7 +37,7 @@ class Question(models.Model):
 
 class Answer(models.Model):
     """Answe to a particular Question."""
-    question = models.ForeignKey(Question,on_delete=models.PROTECT)
+    question = models.ForeignKey(Question,on_delete=models.CASCADE)
     text = models.TextField()
     date_added = models.DateTimeField(auto_now=True)
     owner = models.ForeignKey(User,on_delete=models.PROTECT)
